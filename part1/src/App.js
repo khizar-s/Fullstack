@@ -1,28 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const t = [1, 2, 3]
-const tSquared = t.map(p => p * p)
+const Display = ({ counter}) => <div>{counter}</div>
 
-console.log(tSquared)
-
-const Hello = (props) => {
-  return (
-    <div>
-      <p>Hello {props.name}, you are {props.age} years old</p>
-    </div>
-  )
-}
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>
+    {text}
+  </button>
+)
 
 const App = () => {
-  const name = 'Peter'
-  const age  = 10
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => setCounter(counter + 1)
+  const decreaseByOne = () => setCounter(counter - 1)
+  const setToZero = () => setCounter(0)
 
   return (
-    <>
-      <h1>Greetings</h1>
-      <Hello name="Maya" age={26 + 10}/>
-      <Hello name={name} age={age}/>
-    </>
+    <div>
+      <Display counter={counter}/>
+      <Button handleClick={increaseByOne} text='plus'/>
+      <Button handleClick={setToZero} text='zero'/>
+      <Button handleClick={decreaseByOne} text='minus'/>
+    </div>
   )
 }
 
