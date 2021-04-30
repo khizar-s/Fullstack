@@ -1,5 +1,10 @@
 import React from 'react'
 
+const t = [1, 2, 3]
+const tSquared = t.map(p => p * p)
+
+console.log(tSquared)
+
 const Hello = (props) => {
   return (
     <div>
