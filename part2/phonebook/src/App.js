@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import axios from 'axios'
+import getPersons from './services/getPersons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,12 +11,10 @@ const App = () => {
   const [ filter, setFilter ] = useState('')
 
   const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    getPersons
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }
 
@@ -34,11 +32,22 @@ const App = () => {
     }
 
     if (nameExists) {
-      alert(`${newName} is already added to phonebook`)
+      const id = persons.find(p => p.name === newName).id
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        getPersons
+          .update(id, nameObject)
+          .then(returnedPerson => {
+            setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+          })
+      }
     } else {
-      setPersons(persons.concat(nameObject))
-      setNewName('')
-      setNewPhone('')
+      getPersons
+        .create(nameObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewPhone('')
+        })
     }
   }
 
@@ -52,6 +61,14 @@ const App = () => {
 
   const handleFilter = (event) => {
     setFilter(event.target.value)
+  }
+
+  const deletePerson = (id) => {
+    const name = persons.find(p => p.id === id).name
+    if (window.confirm(`Delete ${name} ?`)) {
+      getPersons.remove(id)
+      setPersons(persons.filter(p => p.id !== id))
+    }
   }
 
   const personsToShow = (filter === "")
@@ -76,7 +93,7 @@ const App = () => {
       
       <h3>Numbers</h3>
       
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} deletePerson={deletePerson} />
     </div>
   )
 }
