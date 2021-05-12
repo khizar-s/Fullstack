@@ -3,12 +3,16 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import getPersons from './services/getPersons'
+import Error from './components/Error'
+import Success from './components/Success'
 
 const App = () => {
-  const [persons, setPersons] = useState([]) 
+  const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newPhone, setNewPhone ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [ success, setSuccess ] = useState(null)
+  const [ error, setError ] = useState(null)
 
   const hook = () => {
     getPersons
@@ -38,6 +42,14 @@ const App = () => {
           .update(id, nameObject)
           .then(returnedPerson => {
             setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+            setSuccess(`Updated ${newName}`)
+            setTimeout(() => setSuccess(null), 5000)
+            setNewName('')
+            setNewPhone('')
+          })
+          .catch(error => {
+            setError(`Information of ${newName} has already been removed from server`)
+            setTimeout(() => setError(null), 5000)
           })
       }
     } else {
@@ -45,10 +57,12 @@ const App = () => {
         .create(nameObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
+          setSuccess(`Added ${newName}`)
+          setTimeout(() => setSuccess(null), 5000)
           setNewName('')
           setNewPhone('')
         })
-    }
+    }    
   }
 
   const handleNameChange = (event) => {
@@ -78,7 +92,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Success message={success}/>
       
+      <Error message={error} />
+
       <Filter filter={filter} handleFilter={handleFilter}/>
 
       <h3>Add a new</h3>
