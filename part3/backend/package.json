@@ -8,8 +8,8 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../frontend && npm run build --prod && cp -r build ../backend",
-    "deploy": "git push heroku main",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
+    "deploy": "cd ../.. && git subtree push --prefix part3/backend/ heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m '3b work' && git push -u origin main && npm run subtree && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
   "author": "Khizar Siddiqui",
