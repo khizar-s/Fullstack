@@ -1,0 +1,19 @@
+.msgSuccess {
+  background-color: lightgrey;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: green;
+  color: green;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.msgError {
+  background-color: lightgrey;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: red;
+  color: red;
+  padding: 10px;
+  font-size: 20px;
+}
