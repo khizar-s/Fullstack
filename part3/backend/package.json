@@ -9,13 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../frontend && npm run build --prod && cp -r build ../backend",
     "deploy": "cd ../.. && git subtree push --prefix part3/backend/ heroku master",
-    "deploy:full": "npm run build:ui && git add . && git commit -m '3b work' && git push -u origin main && npm run deploy",
+    "deploy:full": "npm run build:ui && git add . && git commit -m '3c work' && git push -u origin main && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
   "author": "Khizar Siddiqui",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.12.13"
   },
