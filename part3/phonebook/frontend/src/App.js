@@ -62,6 +62,9 @@ const App = () => {
           setNewName('')
           setNewPhone('')
         })
+        .catch(error => {
+          setError(error.response.data.error)
+        })
     }    
   }
 
