@@ -1,0 +1,28 @@
+{
+  "name": "part3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "cd ../.. && git subtree push --prefix part4/bloglist/ heroku master",
+    "gitstuff": "git add . && git commit -m 'Exercises for 4a' && git push -u origin main",
+    "deploy:full": "npm run gitstuff && npm run deploy",
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
+  },
+  "author": "Khizar Siddiqui",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13"
+  },
+  "devDependencies": {
+    "eslint": "^7.29.0",
+    "nodemon": "^2.0.7"
+  }
+}
