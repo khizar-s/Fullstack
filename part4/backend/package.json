@@ -7,8 +7,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "cd ../.. && git subtree push --prefix part3/backend/ heroku master",
-    "gitstuff": "cd .. && git add . && git commit -m '4a work' && git push -u origin main && cd backend",
+    "deploy": "cd ../.. && git subtree push --prefix part4/backend/ heroku master",
+    "gitstuff": "git add . && git commit -m '4a work' && git push -u origin main",
     "deploy:full": "npm run gitstuff && npm run deploy",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint ."
