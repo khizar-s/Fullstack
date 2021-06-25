@@ -4,7 +4,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const blogsRouter = require('./controllers/blogs')
 
-const mongoUrl = 'mongodb+srv://fullstack:fullstack@cluster0.ean2q.mongodb.net/bloglist-app?retryWrites=true&w=majority'
+const mongoUrl = <mongoHERE>
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 app.use(cors())
