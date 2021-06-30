@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "jest --verbose",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose",
     "deploy": "cd ../.. && git subtree push --prefix part4/bloglist/ heroku master",
-    "gitstuff": "git add . && git commit -m 'Exercises for 4a' && git push -u origin main",
+    "gitstuff": "git add . && git commit -m 'Exercises for 4b' && git push -u origin main",
     "deploy:full": "npm run gitstuff && npm run deploy",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint ."
@@ -23,8 +23,13 @@
     "mongoose": "^5.12.13"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.29.0",
     "jest": "^27.0.5",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
