@@ -24,4 +24,24 @@ blogsRouter.post('/', async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
+blogsRouter.delete('/:id', async (request, response) => {
+  await Blog.findByIdAndRemove(request.params.id)
+  response.status(204).end()
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  const body = request.body
+
+  const blog = {
+    likes: body.likes
+  }
+
+  const savedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+  if (savedBlog) {
+    response.json(savedBlog)
+  } else {
+    response.status(404).json({ error: 'Blog with given id does not exist' })
+  }
+})
+
 module.exports = blogsRouter
