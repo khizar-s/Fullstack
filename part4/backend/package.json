@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "deploy": "cd ../.. && git subtree push --prefix part4/backend/ heroku master",
-    "gitstuff": "git add . && git commit -m '4b work' && git push -u origin main",
+    "gitstuff": "git add . && git commit -m '4d work' && git push -u origin main",
     "deploy:full": "npm run gitstuff && npm run deploy",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint ."
@@ -21,6 +21,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.13",
     "mongoose-unique-validator": "^2.0.3"
   },
