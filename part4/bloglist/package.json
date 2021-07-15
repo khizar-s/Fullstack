@@ -8,7 +8,7 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest --verbose",
     "deploy": "cd ../.. && git subtree push --prefix part4/bloglist/ heroku master",
-    "gitstuff": "git add . && git commit -m 'Exercises for 4b' && git push -u origin main",
+    "gitstuff": "git add . && git commit -m 'Exercises for 4d' && git push -u origin main",
     "deploy:full": "npm run gitstuff && npm run deploy",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint ."
@@ -16,6 +16,7 @@
   "author": "Khizar Siddiqui",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
