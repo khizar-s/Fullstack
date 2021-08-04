@@ -9,6 +9,11 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  const getAllBlogs = async () => {
+    const response = await blogService.getAll()
+    setBlogs(response)
+  }
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     console.log(`old data is ${loggedUserJSON}`)
@@ -17,11 +22,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
-      blogService
-        .getAll()
-        .then(initialBlogs => {
-          setBlogs(initialBlogs)
-        })
+      getAllBlogs()
     }
   }, [])
 
@@ -38,6 +39,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      getAllBlogs()
     } catch (exception) {
       console.log(exception)
     }
