@@ -8,6 +8,9 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   const getAllBlogs = async () => {
     const response = await blogService.getAll()
@@ -48,47 +51,113 @@ const App = () => {
   const loginForm = () => {
     console.log('We in login')
     return (
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <div>
+        <h2>log in to application</h2>
+        <form onSubmit={handleLogin}>
+          <div>
+            username
+              <input
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+          <div>
+            password
+              <input
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
+          <button type="submit">login</button>
+        </form>
+      </div>
     )
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBlogappUser')
+    setUser(null)
+    console.log('Logout')
+  }
+
+  const addBlog = async event => {
+    event.preventDefault()
+    console.log('add Blog')
+    const blog = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    }
+    const returnedBlog = await blogService.create(blog)
+    setBlogs(blogs.concat(returnedBlog))
+    setNewAuthor('')
+    setNewTitle('')
+    setNewUrl('')
   }
 
   const showBlogs = () => {
     console.log('we in show')
+    const name = JSON.parse(window.localStorage.getItem('loggedBlogappUser')).name
     return (
-      blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )
+      <div>
+        <h2>blogs</h2>
+        <p>{name} logged in</p><button type="submit" onClick={() => handleLogout()}>logout</button>
+        <br/><br/>
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} />
+        )}
+      </div>
     )
   }
+
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      <div>
+        title:
+          <input
+          type="text"
+          value={newTitle}
+          name="NewTitle"
+          onChange={({ target }) => setNewTitle(target.value)}
+        />
+      </div>
+      <div>
+        author:
+          <input
+          type="text"
+          value={newAuthor}
+          name="NewAuthor"
+          onChange={({ target }) => setNewAuthor(target.value)}
+        />
+      </div>
+      <div>
+        url:
+          <input
+          type="text"
+          value={newUrl}
+          name="NewUrl"
+          onChange={({ target }) => setNewUrl(target.value)}
+        />
+      </div>
+      <button type="submit">create</button>
+    </form>
+  )
 
   console.log(user)
 
   return (
     <div>
-      <h2>blogs</h2>
       {user === null ?
         loginForm() :
-        showBlogs()
+        <div>
+          {showBlogs()}
+          <br/>
+          {blogForm()}
+        </div>
       }
     </div>
   )
