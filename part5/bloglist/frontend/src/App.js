@@ -11,6 +11,8 @@ const App = () => {
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const getAllBlogs = async () => {
     const response = await blogService.getAll()
@@ -45,6 +47,8 @@ const App = () => {
       getAllBlogs()
     } catch (exception) {
       console.log(exception)
+      setErrorMessage('wrong username or password')
+      setTimeout(() => setErrorMessage(null), 5000)
     }
   }
 
@@ -97,6 +101,8 @@ const App = () => {
     setNewAuthor('')
     setNewTitle('')
     setNewUrl('')
+    setSuccessMessage(`a new blog ${blog.title} by ${blog.author} added`)
+    setTimeout(() => setSuccessMessage(null), 5000)
   }
 
   const showBlogs = () => {
@@ -112,6 +118,30 @@ const App = () => {
         )}
       </div>
     )
+  }
+
+  const showError = message => {
+    if (message === null) {
+      return null
+    } else {
+      return (
+        <div className="error">
+          {message}
+        </div>
+      )
+    }
+  }
+
+  const showSuccess = message => {
+    if (message === null) {
+      return null
+    } else {
+      return (
+        <div className="success">
+          {message}
+        </div>
+      )
+    }
   }
 
   const blogForm = () => (
@@ -151,6 +181,8 @@ const App = () => {
 
   return (
     <div>
+      {showError(errorMessage)}
+      {showSuccess(successMessage)}
       {user === null ?
         loginForm() :
         <div>
