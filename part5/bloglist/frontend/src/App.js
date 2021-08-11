@@ -107,12 +107,8 @@ const App = () => {
 
   const showBlogs = () => {
     console.log('we in show')
-    const name = JSON.parse(window.localStorage.getItem('loggedBlogappUser')).name
     return (
       <div>
-        <h2>blogs</h2>
-        <p>{name} logged in</p><button type="submit" onClick={() => handleLogout()}>logout</button>
-        <br/><br/>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
@@ -145,36 +141,39 @@ const App = () => {
   }
 
   const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>
-        title:
-          <input
-          type="text"
-          value={newTitle}
-          name="NewTitle"
-          onChange={({ target }) => setNewTitle(target.value)}
-        />
-      </div>
-      <div>
-        author:
-          <input
-          type="text"
-          value={newAuthor}
-          name="NewAuthor"
-          onChange={({ target }) => setNewAuthor(target.value)}
-        />
-      </div>
-      <div>
-        url:
-          <input
-          type="text"
-          value={newUrl}
-          name="NewUrl"
-          onChange={({ target }) => setNewUrl(target.value)}
-        />
-      </div>
-      <button type="submit">create</button>
-    </form>
+    <div>
+      <h2>create new</h2>
+      <form onSubmit={addBlog}>
+        <div>
+          title:
+            <input
+            type="text"
+            value={newTitle}
+            name="NewTitle"
+            onChange={({ target }) => setNewTitle(target.value)}
+          />
+        </div>
+        <div>
+          author:
+            <input
+            type="text"
+            value={newAuthor}
+            name="NewAuthor"
+            onChange={({ target }) => setNewAuthor(target.value)}
+          />
+        </div>
+        <div>
+          url:
+            <input
+            type="text"
+            value={newUrl}
+            name="NewUrl"
+            onChange={({ target }) => setNewUrl(target.value)}
+          />
+        </div>
+        <button type="submit">create</button>
+      </form>
+    </div>
   )
 
   console.log(user)
@@ -186,9 +185,13 @@ const App = () => {
       {user === null ?
         loginForm() :
         <div>
-          {showBlogs()}
+          <h2>blogs</h2>
+          <p>{user.name} logged in</p>
+          <button type="submit" onClick={() => handleLogout()}>logout</button>
           <br/>
           {blogForm()}
+          <br/>
+          {showBlogs()}
         </div>
       }
     </div>
