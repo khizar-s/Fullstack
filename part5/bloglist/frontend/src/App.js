@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 import Togglable from './components/Toggable'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -9,9 +10,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
 
@@ -22,9 +20,7 @@ const App = () => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    console.log(`old data is ${loggedUserJSON}`)
     if (loggedUserJSON) {
-      console.log('trying to fetch old login')
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
@@ -54,7 +50,6 @@ const App = () => {
   }
 
   const loginForm = () => {
-    console.log('We in login')
     return (
       <div>
         <h2>log in to application</h2>
@@ -86,29 +81,16 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
-    console.log('Logout')
   }
 
-  const addBlog = async event => {
-    event.preventDefault()
-    blogFormRef.current.toggleVisibility()
-    console.log('add Blog')
-    const blog = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
-    const returnedBlog = await blogService.create(blog)
+  const addBlog = async blogObject => {
+    const returnedBlog = await blogService.create(blogObject)
     setBlogs(blogs.concat(returnedBlog))
-    setNewAuthor('')
-    setNewTitle('')
-    setNewUrl('')
-    setSuccessMessage(`a new blog ${blog.title} by ${blog.author} added`)
+    setSuccessMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
     setTimeout(() => setSuccessMessage(null), 5000)
   }
 
   const showBlogs = () => {
-    console.log('we in show')
     return (
       <div>
         {blogs.map(blog =>
@@ -146,43 +128,9 @@ const App = () => {
 
   const blogForm = () => (
     <Togglable buttonLabel='create new blog' ref={blogFormRef}>
-      <div>
-        <h2>create new</h2>
-        <form onSubmit={addBlog}>
-          <div>
-            title:
-              <input
-              type="text"
-              value={newTitle}
-              name="NewTitle"
-              onChange={({ target }) => setNewTitle(target.value)}
-            />
-          </div>
-          <div>
-            author:
-              <input
-              type="text"
-              value={newAuthor}
-              name="NewAuthor"
-              onChange={({ target }) => setNewAuthor(target.value)}
-            />
-          </div>
-          <div>
-            url:
-              <input
-              type="text"
-              value={newUrl}
-              name="NewUrl"
-              onChange={({ target }) => setNewUrl(target.value)}
-            />
-          </div>
-          <button type="submit">create</button>
-        </form>
-    </div>
+      <BlogForm createBlog={addBlog}/>
     </Togglable>
   )
-
-  console.log(user)
 
   return (
     <div>
