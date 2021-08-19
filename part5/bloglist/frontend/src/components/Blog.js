@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog }) => {
 
   const [viewable, setViewable] = useState(false)
 
@@ -19,7 +19,11 @@ const Blog = ({ blog }) => {
   }
 
   const handleLike = () => {
-    console.log('liked!')
+    const updatedBlog = {
+      ...blog,
+      likes: blog.likes + 1
+    }
+    updateBlog(updatedBlog)
   }
 
   const buttonLabel = viewable ? 'hide' : 'view'

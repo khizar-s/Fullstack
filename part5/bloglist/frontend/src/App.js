@@ -90,11 +90,16 @@ const App = () => {
     setTimeout(() => setSuccessMessage(null), 5000)
   }
 
+  const updateBlog = async blogToUpdate => {
+    const returnedBlog = await blogService.update(blogToUpdate)
+    setBlogs(blogs.map(blog => blog.id === blogToUpdate.id ? returnedBlog : blog))
+  }
+
   const showBlogs = () => {
     return (
       <div>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
         )}
       </div>
     )
