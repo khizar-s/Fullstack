@@ -99,11 +99,18 @@ const App = () => {
     setBlogs(blogs.map(blog => blog.id === blogToUpdate.id ? returnedBlog : blog))
   }
 
+  const deleteBlog = async blogToDelete => {
+    if (window.confirm(`Remove blog ${blogToDelete.title} by ${blogToDelete.author}`)) {
+      await blogService.remove(blogToDelete.id)
+      setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
+    }
+  }
+
   const showBlogs = () => {
     return (
       <div>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog}/>
         )}
       </div>
     )
