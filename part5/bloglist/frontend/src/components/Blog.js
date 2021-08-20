@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
 
-const Blog = ({ blog, updateBlog, deleteBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog, loggedIn }) => {
 
   const [viewable, setViewable] = useState(false)
 
@@ -13,6 +13,8 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   }
 
   const showWhenViewable = { display: viewable ? '' : 'none' }
+
+  const showWhenLoggedIn = { display: loggedIn ? '' : 'none' }
 
   const toggleVisibility = () => {
     setViewable(!viewable)
@@ -41,7 +43,9 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
         {blog.url} <br/>
         likes {blog.likes} <button onClick={handleLike}>like</button> <br/>
         {blog.user.name} <br/>
-        <button onClick={removeBlog}>remove</button>
+        <div style={showWhenLoggedIn}>
+          <button onClick={removeBlog}>remove</button>
+        </div>
       </div>
   </div>
 )}
