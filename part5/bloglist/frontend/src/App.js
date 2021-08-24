@@ -47,7 +47,7 @@ const App = () => {
       setPassword('')
       getAllBlogs()
     } catch (exception) {
-      console.log(exception)
+      console.error(exception)
       setErrorMessage('wrong username or password')
       setTimeout(() => setErrorMessage(null), 5000)
     }
@@ -60,7 +60,7 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             username
-              <input
+            <input
               type="text"
               value={username}
               name="Username"
@@ -69,7 +69,7 @@ const App = () => {
           </div>
           <div>
             password
-              <input
+            <input
               type="password"
               value={password}
               name="Password"
