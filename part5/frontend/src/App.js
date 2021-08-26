@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Note from './components/Note'
 import LoginForm from './components/LoginForm'
-import Togglable from './components/Toggable'
+import Togglable from './components/Togglable'
 import NoteForm from './components/NoteForm'
 import noteService from './services/notes'
 import Notification from './components/Notification.js'
