@@ -36,15 +36,15 @@ const Blog = ({ blog, updateBlog, deleteBlog, loggedIn }) => {
   const buttonLabel = viewable ? 'hide' : 'view'
 
   return (
-    <div style={blogStyle}>
-      <div>
-        {blog.title} {blog.author} <button onClick={toggleVisibility}>{buttonLabel}</button>
+    <div style={blogStyle} className='blog'>
+      <div className='mainBlog'>
+        {blog.title} - {blog.author} <button onClick={toggleVisibility}>{buttonLabel}</button>
       </div>
-      <div style={showWhenViewable}>
+      <div style={showWhenViewable} className='moreBlog'>
         {blog.url} <br/>
         likes {blog.likes} <button onClick={handleLike}>like</button> <br/>
         {blog.user.name} <br/>
-        <div style={showWhenLoggedIn}>
+        <div style={showWhenLoggedIn} className='removeBlog'>
           <button onClick={removeBlog}>remove</button>
         </div>
       </div>
